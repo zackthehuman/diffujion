@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 
 import com.zackthehuman.diffujion.seed.CenterSeedStrategy;
 import com.zackthehuman.diffujion.seed.SeedStrategy;
+import com.zackthehuman.diffujion.spawn.RandomSpawnStrategy;
+import com.zackthehuman.diffujion.spawn.SpawnStrategy;
 import com.zackthehuman.diffujion.ui.SimulationRenderingPanel;
 
 public final class Application {
@@ -17,23 +19,16 @@ public final class Application {
 		
 		Simulation simulation = new Simulation(width, height);
 		SeedStrategy seedStrategy = new CenterSeedStrategy();
+		SpawnStrategy spawnStrategy = new RandomSpawnStrategy();
+		
 		Particle[][] particles = simulation.getCluster();
 		
 		seedStrategy.seed(simulation);
 		
 		// Walk some particles
 		for(int i = 0; i < particleCount; ++i) {
-			// 
-			// Start spawn strategy
-			//
-			double spawnX = (Math.random() * 1000.0) % simulation.getWidth();
-			double spawnY = (Math.random() * 1000.0) % simulation.getHeight();
-			
 			int steps = 0;
-			Particle walker = new Particle(spawnX, spawnY, steps);
-			//
-			// End spawn strategy
-			//
+			Particle walker = spawnStrategy.spawn(simulation);
 			
 			// Simulation starts here
 			while(!isCollidingWithCluster(simulation, walker)) {
@@ -79,8 +74,7 @@ public final class Application {
 				//
 				// If the particle escapes, pick a new staring place and keep going
 				if(!isInBounds(simulation, walker)) {
-					walker.setX((Math.random() * 1000.0) % simulation.getWidth());
-					walker.setY((Math.random() * 1000.0) % simulation.getHeight());
+					walker = spawnStrategy.spawn(simulation);
 				}
 				//
 				// End escape-handling strategy
@@ -94,7 +88,7 @@ public final class Application {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(simulation.getWidth(), simulation.getHeight());
 		
-		SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(particles);
+		SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(simulation);
 		dlaPanel.setPreferredSize(new Dimension(simulation.getWidth(), simulation.getHeight()));
 		
 		frame.add(dlaPanel);
