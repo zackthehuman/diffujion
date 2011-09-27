@@ -4,26 +4,22 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+import com.zackthehuman.diffujion.seed.CenterSeedStrategy;
+import com.zackthehuman.diffujion.seed.SeedStrategy;
 import com.zackthehuman.diffujion.ui.SimulationRenderingPanel;
 
 public final class Application {
 	
 	public static void main(String[] args) {
-		int width = 256;
+		int width = 256; 
 		int height = 256;
 		int particleCount = 4096;
 		
 		Simulation simulation = new Simulation(width, height);
+		SeedStrategy seedStrategy = new CenterSeedStrategy();
 		Particle[][] particles = simulation.getCluster();
 		
-		//for(int x = 0; x < simulationWidth; ++x) {
-		//	for(int y = 0; y < simulationHeight; ++y) {
-		//		particles[x][y] = null;
-		//	}
-		//}
-		
-		particles[simulation.getWidth()/2][simulation.getHeight()/2] = 
-				new Particle(simulation.getWidth()/2, simulation.getHeight()/2, 1);
+		seedStrategy.seed(simulation);
 		
 		// Walk some particles
 		for(int i = 0; i < particleCount; ++i) {
