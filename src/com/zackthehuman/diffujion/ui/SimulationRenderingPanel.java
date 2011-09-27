@@ -7,22 +7,22 @@ import java.awt.Image;
 import javax.swing.JPanel;
 
 import com.zackthehuman.diffujion.Particle;
-import com.zackthehuman.diffujion.Simulation;
+import com.zackthehuman.diffujion.Cluster;
 
 import java.awt.image.BufferedImage;
 
 public class SimulationRenderingPanel extends JPanel {
 	private static final long serialVersionUID = 69195555469613908L;
-	private Simulation simulation;
+	private Cluster simulation;
 	private boolean isRenderRequired;
 	private BufferedImage modelRendering;
 	
-	public SimulationRenderingPanel(Simulation simulation) {
+	public SimulationRenderingPanel(Cluster simulation) {
 		super();
 		setSimulation(simulation);
 	}
 	
-	public void setSimulation(Simulation simulation) {
+	public void setSimulation(Cluster simulation) {
 		this.simulation = simulation;
 		isRenderRequired = true;
 	}
@@ -31,8 +31,8 @@ public class SimulationRenderingPanel extends JPanel {
 		super.paintComponent(g);
 		
 		if(isRenderRequired) {
-			int width = simulation.getWidth();
-			int height = simulation.getHeight();
+			int width = simulation.getMaximumWidth();
+			int height = simulation.getMaximumHeight();
 			Particle[][] cluster = simulation.getCluster();
 			
 			modelRendering = new BufferedImage(width, height, Image.SCALE_DEFAULT);

@@ -1,7 +1,7 @@
 package com.zackthehuman.diffujion.seed;
 
 import com.zackthehuman.diffujion.Particle;
-import com.zackthehuman.diffujion.Simulation;
+import com.zackthehuman.diffujion.Cluster;
 
 /**
  * Seeds a simulation by placing a single seed at the center.
@@ -9,10 +9,10 @@ import com.zackthehuman.diffujion.Simulation;
 public class CenterSeedStrategy implements SeedStrategy {
 
 	@Override
-	public void seed(Simulation simulation) {
+	public void seed(Cluster simulation) {
 		if(null != simulation) {
-			int width = simulation.getWidth();
-			int height = simulation.getHeight();
+			int width = simulation.getMaximumWidth();
+			int height = simulation.getMaximumHeight();
 			Particle[][] cluster = simulation.getCluster();
 			
 			if(null != cluster) {

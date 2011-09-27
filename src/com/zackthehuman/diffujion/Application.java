@@ -17,11 +17,11 @@ public final class Application {
 		int height = 256;
 		int particleCount = 4096;
 		
-		Simulation simulation = new Simulation(width, height);
+		Cluster simulation = new Cluster(width, height);
 		SeedStrategy seedStrategy = new CenterSeedStrategy();
 		SpawnStrategy spawnStrategy = new RandomSpawnStrategy();
 		
-		Particle[][] particles = simulation.getCluster();
+		//Particle[][] particles = simulation.getCluster();
 		
 		seedStrategy.seed(simulation);
 		
@@ -81,15 +81,20 @@ public final class Application {
 				//
 			}
 			
-			particles[(int)walker.getX()][(int)walker.getY()] = walker;
+			//particles[(int)walker.getX()][(int)walker.getY()] = walker;
+			boolean attached = simulation.attach(walker);
+			
+			if(!attached) {
+				// TODO: throw exception?
+			}
 		}
 		
 		JFrame frame = new JFrame("Diffujion");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(simulation.getWidth(), simulation.getHeight());
+		frame.setSize(simulation.getMaximumWidth(), simulation.getMaximumHeight());
 		
 		SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(simulation);
-		dlaPanel.setPreferredSize(new Dimension(simulation.getWidth(), simulation.getHeight()));
+		dlaPanel.setPreferredSize(new Dimension(simulation.getMaximumWidth(), simulation.getMaximumHeight()));
 		
 		frame.add(dlaPanel);
 		frame.pack();
@@ -97,23 +102,25 @@ public final class Application {
 
 	}
 
-	private static boolean isInBounds(Simulation simulation, Particle walker) {
-		return walker.getX() >= 0 && walker.getX() < simulation.getWidth() 
-				&& walker.getY() >= 0 && walker.getY() < simulation.getHeight();
+	private static boolean isInBounds(Cluster simulation, Particle walker) {
+		return walker.getX() >= 0 && walker.getX() < simulation.getMaximumWidth() 
+				&& walker.getY() >= 0 && walker.getY() < simulation.getMaximumHeight();
 	}
 
-	private static boolean isCollidingWithCluster(Simulation simulation, Particle walker) {
+	private static boolean isCollidingWithCluster(Cluster simulation, Particle walker) {
 		int x = (int)walker.getX();
 		int y = (int)walker.getY();
-		int width = simulation.getWidth();
-		int height = simulation.getHeight();
+		int width = simulation.getMaximumWidth();
+		int height = simulation.getMaximumHeight();
 		Particle[][] cluster = simulation.getCluster();
 		
+		//Particle self = cluster[Math.min(Math.max(x, 0), width - 1)][Math.min(Math.max(y, 0), height - 1)];
 		Particle above = cluster[Math.min(Math.max(x, 0), width - 1)][Math.min(Math.max(y - 1, 0), height - 1)];
 		Particle right = cluster[Math.min(Math.max(x + 1, 0), width - 1)][Math.min(Math.max(y, 0), height - 1)];
 		Particle bottom = cluster[Math.min(Math.max(x, 0), width - 1)][Math.min(Math.max(y + 1, 0), height - 1)];
 		Particle left = cluster[Math.min(Math.max(x - 1, 0), width - 1)][Math.min(Math.max(y, 0), height - 1)];
 		
+		//return self == null && (above != null || right != null || bottom != null || left != null);
 		return above != null || right != null || bottom != null || left != null;
 	}
 

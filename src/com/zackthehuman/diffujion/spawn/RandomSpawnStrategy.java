@@ -1,7 +1,7 @@
 package com.zackthehuman.diffujion.spawn;
 
 import com.zackthehuman.diffujion.Particle;
-import com.zackthehuman.diffujion.Simulation;
+import com.zackthehuman.diffujion.Cluster;
 
 /**
  * Spawns a Particle at a random coordinate within the simulation space.
@@ -12,10 +12,10 @@ import com.zackthehuman.diffujion.Simulation;
 public class RandomSpawnStrategy implements SpawnStrategy {
 
 	@Override
-	public Particle spawn(Simulation simulation) {
+	public Particle spawn(Cluster simulation) {
 		if(null != simulation) {
-			int width = simulation.getWidth();
-			int height = simulation.getHeight();
+			int width = simulation.getMaximumWidth();
+			int height = simulation.getMaximumHeight();
 			
 			double spawnX = Math.random() * (width + 1.0);
 			double spawnY = Math.random() * (height + 1.0);
