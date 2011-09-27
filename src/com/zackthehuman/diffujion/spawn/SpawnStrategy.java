@@ -10,5 +10,5 @@ import com.zackthehuman.diffujion.Cluster;
  *
  */
 public interface SpawnStrategy {
-	public Particle spawn(Cluster simulation);
+	public Particle spawn(Cluster cluster);
 }

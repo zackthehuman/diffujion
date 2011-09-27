@@ -9,15 +9,16 @@ import com.zackthehuman.diffujion.Cluster;
 public class CenterSeedStrategy implements SeedStrategy {
 
 	@Override
-	public void seed(Cluster simulation) {
-		if(null != simulation) {
-			int width = simulation.getMaximumWidth();
-			int height = simulation.getMaximumHeight();
-			Particle[][] cluster = simulation.getCluster();
+	public void seed(Cluster cluster) {
+		if(null != cluster) {
+			int width = cluster.getMaximumWidth();
+			int height = cluster.getMaximumHeight();
 			
-			if(null != cluster) {
-				cluster[width/2][height/2] = new Particle(width/2, height/2);
-			} else {
+			Particle seed = new Particle(width/2, height/2);
+			
+			boolean success = cluster.attach(seed);
+			
+			if(!success) {
 				// TODO: throw exception?
 			}
 		} else {

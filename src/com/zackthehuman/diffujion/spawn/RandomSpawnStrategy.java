@@ -12,10 +12,10 @@ import com.zackthehuman.diffujion.Cluster;
 public class RandomSpawnStrategy implements SpawnStrategy {
 
 	@Override
-	public Particle spawn(Cluster simulation) {
-		if(null != simulation) {
-			int width = simulation.getMaximumWidth();
-			int height = simulation.getMaximumHeight();
+	public Particle spawn(Cluster cluster) {
+		if(null != cluster) {
+			int width = cluster.getMaximumWidth();
+			int height = cluster.getMaximumHeight();
 			
 			double spawnX = Math.random() * (width + 1.0);
 			double spawnY = Math.random() * (height + 1.0);
