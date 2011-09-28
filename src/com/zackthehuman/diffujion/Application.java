@@ -22,18 +22,26 @@ public final class Application {
 		simulation.setWalker(new RandomWalkStrategy());
 		
 		simulation.run();
-		
-		Cluster cluster = simulation.getCluster();
-		
-		JFrame frame = new JFrame("Diffujion");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(cluster.getMaximumWidth(), cluster.getMaximumHeight());
-		
-		SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(cluster);
-		dlaPanel.setPreferredSize(new Dimension(cluster.getMaximumWidth(), cluster.getMaximumHeight()));
-		
-		frame.add(dlaPanel);
-		frame.pack();
-		frame.setVisible(true);
+
+		showSimulationResults(simulation);
 	}	
+	
+	private static void showSimulationResults(Simulation simulation) {
+		if(null != simulation) {
+			Cluster cluster = simulation.getCluster();
+			
+			if(null != cluster) {
+				JFrame frame = new JFrame("Diffujion");
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setSize(cluster.getMaximumWidth(), cluster.getMaximumHeight());
+				
+				SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(cluster);
+				dlaPanel.setPreferredSize(new Dimension(cluster.getMaximumWidth(), cluster.getMaximumHeight()));
+				
+				frame.add(dlaPanel);
+				frame.pack();
+				frame.setVisible(true);
+			}
+		}
+	}
 }
