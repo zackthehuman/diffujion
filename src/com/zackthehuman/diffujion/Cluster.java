@@ -46,10 +46,13 @@ public class Cluster {
 	 */
 	public boolean attach(Particle particle) {
 		if(null != particle) {
+			if(!isInBounds(particle)) {
+				return false;
+			}
+			
 			int attachX = (int)particle.getX();
 			int attachY = (int)particle.getY();
 			
-			// TODO: check bounds on attachX and attachY
 			if(null == cluster[attachX][attachY]) {
 				cluster[attachX][attachY] = particle;
 				return ATTACHMENT_SUCCEEDED;
@@ -58,5 +61,36 @@ public class Cluster {
 			return ATTACHMENT_FAILED;
 		}
 		return ATTACHMENT_FAILED;
+	}
+	
+	public boolean isInBounds(Particle particle) {
+		if(null != particle) {
+			return particle.getX() >= 0 && particle.getX() < getMaximumWidth() 
+					&& particle.getY() >= 0 && particle.getY() < getMaximumHeight();
+		}
+		return false;
+	}
+	
+	public boolean canAttach(Particle particle) {
+		if(null != particle) {
+			
+			if(!isInBounds(particle)) {
+				return false;
+			}
+			
+			int x = (int)particle.getX();
+			int y = (int)particle.getY();
+			int width = getMaximumWidth();
+			int height = getMaximumHeight();
+			
+			Particle above = cluster[x][Math.max(y - 1, 0)];
+			Particle right = cluster[Math.min(x + 1, width - 1)][y];
+			Particle bottom = cluster[x][Math.min(y + 1, height - 1)];
+			Particle left = cluster[Math.max(x - 1, 0)][y];
+
+			return (above != null || right != null || bottom != null || left != null);
+		}
+		
+		return false;
 	}
 }
