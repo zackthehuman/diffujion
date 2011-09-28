@@ -33,7 +33,6 @@ public final class Application {
 			if(null != cluster) {
 				JFrame frame = new JFrame("Diffujion");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				frame.setSize(cluster.getMaximumWidth(), cluster.getMaximumHeight());
 				
 				SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(cluster);
 				dlaPanel.setPreferredSize(new Dimension(cluster.getMaximumWidth(), cluster.getMaximumHeight()));
