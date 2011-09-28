@@ -7,6 +7,13 @@ import java.util.Random;
 
 import com.zackthehuman.diffujion.Particle;
 
+/**
+ * Walks a Particle by choosing one of four directions at random and shifting 
+ * one unit in that direction.
+ * 
+ * @author Zack
+ *
+ */
 public class RandomWalkStrategy implements WalkStrategy {
 	protected enum Direction {
 		UP,
@@ -31,19 +38,15 @@ public class RandomWalkStrategy implements WalkStrategy {
 			
 			switch(direction) {
 			case UP:
-				// Up
 				particle.setY(particle.getY() - 1);
 				break;
 			case RIGHT:
-				// Right
 				particle.setX(particle.getX() + 1);
 				break;
 			case DOWN:
-				// Down
 				particle.setY(particle.getY() + 1);
 				break;
 			case LEFT:
-				// Left
 				particle.setX(particle.getX() - 1);
 				break;
 			default:

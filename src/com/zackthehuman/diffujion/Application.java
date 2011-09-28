@@ -17,7 +17,7 @@ public final class Application {
 	public static void main(String[] args) {
 		int width = 256; 
 		int height = 256;
-		int particleCount = 4096;
+		int particleCount = 1000;
 		
 		Cluster cluster = new Cluster(width, height);
 		SeedStrategy seedStrategy = new CenterSeedStrategy();
