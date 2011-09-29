@@ -12,9 +12,9 @@ import com.zackthehuman.diffujion.walk.RandomWalkStrategy;
 public final class Application {
 	
 	public static void main(String[] args) {
-		int width = 256; 
-		int height = 256;
-		int particleCount = 4096;
+		int width = 100; 
+		int height = 100;
+		int particleCount = 300;
 		
 		Simulation simulation = new Simulation(width, height, particleCount);
 		simulation.setSeeder(new CenterSeedStrategy());
@@ -34,7 +34,7 @@ public final class Application {
 				JFrame frame = new JFrame("Diffujion");
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-				SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(cluster);
+				SimulationRenderingPanel dlaPanel = new SimulationRenderingPanel(simulation);
 				dlaPanel.setPreferredSize(new Dimension(cluster.getMaximumWidth(), cluster.getMaximumHeight()));
 				
 				frame.add(dlaPanel);

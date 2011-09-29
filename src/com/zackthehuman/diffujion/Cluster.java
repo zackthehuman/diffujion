@@ -5,12 +5,12 @@ public class Cluster {
 	public static final boolean ATTACHMENT_SUCCEEDED = true;
 	private int maximumWidth;
 	private int maximumHeight;
-	private Particle[][] cluster;
+	private Particle[][] particles;
 	
 	public Cluster(int maximumWidth, int maximumHeight) {
 		setMaximumWidth(maximumWidth);
 		setMaximumHeight(maximumHeight);
-		setCluster(new Particle[getMaximumWidth()][getMaximumHeight()]);
+		setParticles(new Particle[getMaximumWidth()][getMaximumHeight()]);
 	}
 
 	public int getMaximumWidth() {
@@ -29,12 +29,12 @@ public class Cluster {
 		this.maximumHeight = maximumHeight;
 	}
 	
-	public Particle[][] getCluster() {
-		return cluster;
+	public Particle[][] getParticles() {
+		return particles;
 	}
 	
-	private void setCluster(Particle[][] cluster) {
-		this.cluster = cluster;
+	private void setParticles(Particle[][] cluster) {
+		this.particles = cluster;
 	}
 	
 	/**
@@ -53,8 +53,8 @@ public class Cluster {
 			int attachX = (int)particle.getX();
 			int attachY = (int)particle.getY();
 			
-			if(null == cluster[attachX][attachY]) {
-				cluster[attachX][attachY] = particle;
+			if(null == particles[attachX][attachY]) {
+				particles[attachX][attachY] = particle;
 				return ATTACHMENT_SUCCEEDED;
 			}
 			
@@ -83,10 +83,10 @@ public class Cluster {
 			int width = getMaximumWidth();
 			int height = getMaximumHeight();
 			
-			Particle above = cluster[x][Math.max(y - 1, 0)];
-			Particle right = cluster[Math.min(x + 1, width - 1)][y];
-			Particle bottom = cluster[x][Math.min(y + 1, height - 1)];
-			Particle left = cluster[Math.max(x - 1, 0)][y];
+			Particle above = particles[x][Math.max(y - 1, 0)];
+			Particle right = particles[Math.min(x + 1, width - 1)][y];
+			Particle bottom = particles[x][Math.min(y + 1, height - 1)];
+			Particle left = particles[Math.max(x - 1, 0)][y];
 
 			return (above != null || right != null || bottom != null || left != null);
 		}
