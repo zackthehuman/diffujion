@@ -72,6 +72,8 @@ public class Simulation {
 				
 				Particle particle = spawner.spawn(getCluster());
 				
+				// TODO: Check if the newly-spawned Particle is null, then fix it
+				
 				while(!cluster.canAttach(particle)) {				
 					walker.walk(particle);
 					particle.setValue(++steps);

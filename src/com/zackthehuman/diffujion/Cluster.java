@@ -5,6 +5,7 @@ public class Cluster {
 	public static final boolean ATTACHMENT_SUCCEEDED = true;
 	private int maximumWidth;
 	private int maximumHeight;
+	private double radius;
 	private Particle[][] particles;
 	private Particle seed;
 	
@@ -28,6 +29,23 @@ public class Cluster {
 	
 	public void setMaximumHeight(int maximumHeight) {
 		this.maximumHeight = maximumHeight;
+	}
+	
+	/**
+	 * Gets the radius of the cluster, which is the distance from its seed
+	 * Particle to its farthest leaf Particle.
+	 */
+	public double getRadius() {
+		return radius;
+	}
+	
+	private void calculateRadius(Particle leaf) {
+		if (null != seed && null != leaf) {
+			double newRadius = Math.sqrt(Math.pow(seed.getX() - leaf.getX(), 2)
+					+ Math.pow(seed.getY() - leaf.getY(), 2));
+			
+			radius = Math.max(radius, newRadius);
+		}
 	}
 	
 	public Particle[][] getParticles() {
@@ -66,6 +84,7 @@ public class Cluster {
 			
 			if(null == particles[attachX][attachY]) {
 				particles[attachX][attachY] = particle;
+				calculateRadius(particle);
 				return ATTACHMENT_SUCCEEDED;
 			}
 			
