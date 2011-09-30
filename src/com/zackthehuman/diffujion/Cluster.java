@@ -58,9 +58,9 @@ public class Cluster {
 	public boolean attach(Particle particle) {
 		if(null != particle) {
 			if(!isInBounds(particle)) {
-				return false;
+				return ATTACHMENT_FAILED;
 			}
-			
+
 			int attachX = (int)particle.getX();
 			int attachY = (int)particle.getY();
 			
