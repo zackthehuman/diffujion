@@ -6,6 +6,7 @@ public class Cluster {
 	private int maximumWidth;
 	private int maximumHeight;
 	private Particle[][] particles;
+	private Particle seed;
 	
 	public Cluster(int maximumWidth, int maximumHeight) {
 		setMaximumWidth(maximumWidth);
@@ -37,6 +38,16 @@ public class Cluster {
 		this.particles = cluster;
 	}
 	
+	public Particle getSeed() {
+		return seed;
+	}
+
+	public void setSeed(Particle seed) {
+		if(attach(seed)) {
+			this.seed = seed;
+		}
+	}
+
 	/**
 	 * Attempts to attach a Particle to the cluster. If attachment fails false
 	 * is returned. If attachment succeeds true is returned.
@@ -73,6 +84,9 @@ public class Cluster {
 	
 	public boolean canAttach(Particle particle) {
 		if(null != particle) {
+			if(null == getSeed()) {
+				return false; // TODO: Should this throw an exception instead? IllegalState?
+			}
 			
 			if(!isInBounds(particle)) {
 				return false;

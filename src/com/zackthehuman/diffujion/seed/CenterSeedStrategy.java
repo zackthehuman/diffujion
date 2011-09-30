@@ -16,11 +16,7 @@ public class CenterSeedStrategy implements SeedStrategy {
 			
 			Particle seed = new Particle(width/2, height/2);
 			
-			boolean success = cluster.attach(seed);
-			
-			if(!success) {
-				// TODO: throw exception?
-			}
+			cluster.setSeed(seed);
 		} else {
 			// TODO: throw exception?
 		}

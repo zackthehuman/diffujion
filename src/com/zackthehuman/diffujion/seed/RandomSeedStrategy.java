@@ -20,11 +20,7 @@ public class RandomSeedStrategy implements SeedStrategy {
 			
 			Particle seed = new Particle(random.nextInt(width), random.nextInt(height));
 			
-			boolean success = cluster.attach(seed);
-			
-			if(!success) {
-				// TODO: throw exception?
-			}
+			cluster.setSeed(seed);
 		} else {
 			// TODO: throw exception?
 		}

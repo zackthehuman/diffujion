@@ -76,7 +76,7 @@ public class Simulation {
 					walker.walk(particle);
 					particle.setValue(++steps);
 
-					// If the particle escapes, pick a new staring place and keep going
+					// If the particle escapes, pick a new starting place and keep going
 					if(!cluster.isInBounds(particle)) {
 						particle = spawner.spawn(cluster);
 					}
