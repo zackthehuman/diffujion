@@ -9,6 +9,13 @@ public class Cluster {
 	private Particle[][] particles;
 	private Particle seed;
 	
+	/**
+	 * A cluster is the result of the aggregation of Particles, starting
+	 * with a seed.
+	 * 
+	 * @param maximumWidth
+	 * @param maximumHeight
+	 */
 	public Cluster(int maximumWidth, int maximumHeight) {
 		setMaximumWidth(maximumWidth);
 		setMaximumHeight(maximumHeight);

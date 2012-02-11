@@ -43,6 +43,7 @@ public class SimulationRenderingPanel extends JPanel {
 			
 			renderingGraphics.setColor(Color.WHITE);
 			renderingGraphics.fillRect(0, 0, width, height);
+			
 			renderingGraphics.setColor(Color.BLACK);
 			
 			for(int x = 0; x < width; ++x) {
