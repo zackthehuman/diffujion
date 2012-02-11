@@ -5,6 +5,11 @@ import com.zackthehuman.diffujion.spawn.SpawnStrategy;
 import com.zackthehuman.diffujion.walk.WalkStrategy;
 
 public class Simulation {
+	/**
+	 * Defines how many repeated failed spawns can take place before stopping
+	 * the simulation.
+	 */
+	private static int BAD_SPAWN_LIMIT = 100;
 	private int particleCount;
 	
 	private SeedStrategy seeder;
@@ -67,29 +72,54 @@ public class Simulation {
 		if(isReady()) {
 			seeder.seed(getCluster());
 			
-			for(int particleIteration = 0; particleIteration < particleCount; ++particleIteration) {
-				int steps = 0;
-				
-				Particle particle = spawner.spawn(getCluster());
-				
-				// TODO: Check if the newly-spawned Particle is null, then fix it
-				
-				while(!cluster.canAttach(particle)) {				
-					walker.walk(particle);
-					particle.setValue(++steps);
-
-					// If the particle escapes, pick a new starting place and keep going
-					if(!cluster.isInBounds(particle)) {
-						particle = spawner.spawn(cluster);
+			try {
+				for(int particleIteration = 0; particleIteration < particleCount; ++particleIteration) {
+					int steps = 0;
+					
+					Particle particle = spawnParticle();
+					
+					while(!cluster.canAttach(particle)) {				
+						walker.walk(particle);
+						particle.setValue(++steps);
+	
+						// If the particle escapes, pick a new starting place and keep going
+						if(!cluster.isInBounds(particle)) {
+							particle = spawnParticle();
+						}
 					}
+					
+					cluster.attach(particle);
 				}
-				
-				cluster.attach(particle);
+			} catch(Exception ex) {
+				System.out.println("Simulation stopped because no new particles could be spawned.");
 			}
 			
 		} else {
 			throw new IllegalStateException("The simulation has not been properly initialized.");
 		}
+	}
+
+	/**
+	 * Spawns a Particle with the current spawning strategy.
+	 * @return newly spawned Particle based on the spawning strategy
+	 * @throws Exception 
+	 */
+	private Particle spawnParticle() throws Exception {
+		Particle particle = null;
+		int badSpawnCount = -1;
+		
+		// TODO: This could loop forever under specific circumstances
+		// Should we add a failure limit and break if we reach it?
+		do {
+			if(badSpawnCount >= BAD_SPAWN_LIMIT) {
+				throw new Exception("Unable to spawn more particles.");
+			}
+			
+			particle = spawner.spawn(cluster);
+			badSpawnCount++;
+		} while(particle == null);
+		
+		return particle;
 	}
 	
 	/**

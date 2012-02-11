@@ -18,6 +18,10 @@ public class SimulationRenderingPanel extends JPanel {
 	private boolean isRenderRequired;
 	private BufferedImage modelRendering;
 	
+	protected Simulation getSimulation() {
+		return simulation;
+	}
+	
 	public SimulationRenderingPanel(Simulation simulation) {
 		super();
 		setSimulation(simulation);
@@ -27,7 +31,8 @@ public class SimulationRenderingPanel extends JPanel {
 		this.simulation = simulation;
 		isRenderRequired = true;
 	}
-
+	
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
@@ -57,6 +62,7 @@ public class SimulationRenderingPanel extends JPanel {
 			isRenderRequired = false;
 		}
 		
-		g.drawImage(modelRendering, 0, 0, this);
+		//g.drawImage(modelRendering, 0, 0, this);
+		g.drawImage(modelRendering, 0, 0, this.getWidth(), this.getHeight(), this);
 	}
 }
