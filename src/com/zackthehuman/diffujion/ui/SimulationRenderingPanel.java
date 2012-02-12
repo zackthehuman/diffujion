@@ -49,11 +49,12 @@ public class SimulationRenderingPanel extends JPanel {
 			renderingGraphics.setColor(Color.WHITE);
 			renderingGraphics.fillRect(0, 0, width, height);
 			
-			renderingGraphics.setColor(Color.BLACK);
-			
 			for(int x = 0; x < width; ++x) {
 				for(int y = 0; y < height; ++y) {
 					if(particles[x][y] != null) {
+						int intensity = (int)(particles[x][y].getValue()) % 256;
+						
+						renderingGraphics.setColor(new Color(intensity, intensity, intensity));
 						renderingGraphics.drawLine(x, y, x, y);
 					}
 				}
@@ -62,7 +63,6 @@ public class SimulationRenderingPanel extends JPanel {
 			isRenderRequired = false;
 		}
 		
-		//g.drawImage(modelRendering, 0, 0, this);
 		g.drawImage(modelRendering, 0, 0, this.getWidth(), this.getHeight(), this);
 	}
 }
